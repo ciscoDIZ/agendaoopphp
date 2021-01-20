@@ -12,7 +12,7 @@ $agenda = new Agenda();
 try {
     $agenda->add($contact);
     $agenda->add($contact1);
-    //$agenda->add(new Person("12457877N", "hola", "numero de telefono"));
+    $agenda->add(new Person("12457877N", "hola", "numero de telefono", null));
     //$agenda->add(2);
 }catch (Exception $exception){
     echo $exception;

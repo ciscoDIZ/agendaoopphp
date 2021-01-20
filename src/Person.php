@@ -36,8 +36,8 @@ class Person extends Contact
 
     public function equals($contact)
     {
-        if($contact instanceof Contact){
-
+        if($contact instanceof Person){
+            return hash_equals($this->dni, $contact->dni);
         }else{
             return false;
         }
