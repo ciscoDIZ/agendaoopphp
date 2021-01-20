@@ -1,7 +1,8 @@
 <?php
 class Agenda
 {
-    private $contacts;
+    private static $contacts;
+
 
     /**
      * Agenda constructor.
@@ -17,12 +18,12 @@ class Agenda
 
     }
     public function __construct0(){
-        $this->contacts = new ArrayObject();
+        Agenda::$contacts = new ArrayObject();
     }
 
     public function __construct1($data)
     {
-        $this->contacts = new ArrayObject($data);
+        Agenda::$contacts = new ArrayObject($data);
     }
     /**
      * Agrega contacto a la agenda.
@@ -30,12 +31,12 @@ class Agenda
      * @return bool - true si consigue agregar false en caso de duplicados
      * @throws Exception - en caso de que el parametro contact no sea instancia de clase Contact
      */
-    public function add($contact)
+    public static function add($contact)
     {
         if($contact instanceof Contact) {
             $result = false;
-            if (!$this->contains($contact)) {
-                $this->contacts->append($contact);
+            if (!Agenda::contains($contact)) {
+                Agenda::$contacts->append($contact);
                 $result = true;
             }
         }else{
@@ -49,10 +50,10 @@ class Agenda
      * @param $contact Contact
      * @return bool - true si el contacto se encuentra en la agenda, false en caso contrario
      */
-    public function contains($contact)
+    public static function contains($contact)
     {
         $result = false;
-        $iterator =$this->contacts->getIterator();
+        $iterator = Agenda::$contacts->getIterator();
         while($iterator->valid() && !$result){
             if($iterator->current()->equals($contact)){
                 $result = true;
@@ -69,7 +70,7 @@ class Agenda
      */
     public function remove($name_str)
     {
-        $iterator = $this->contacts->getIterator();
+        $iterator = Agenda::$contacts->getIterator();
         $removed = false;
         while ($iterator->valid() && !$removed){
             if(hash_equals($iterator->current()->name, $name_str)){
@@ -87,7 +88,7 @@ class Agenda
     public function findAll()
     {
         $table = "<table border='1'><tr><td>DNI</td><td>Nombre</td><td>Teléfono</td></tr>";
-        foreach ($this->contacts as $contact){
+        foreach (Agenda::$contacts as $contact){
             $table .= "<tr><td>$contact->dni</td><td>$contact->name</td><td>$contact->phone</td></tr>";
         }
         $table .= "</table>";
@@ -102,7 +103,7 @@ class Agenda
     public function existContact($name_str)
     {
         $exist = false;
-        $iterator = $this->contacts->getIterator();
+        $iterator = Agenda::$contacts->getIterator();
         while($iterator->valid() && !$exist){
             $exist = hash_equals($iterator->current()->name, $name_str);
             $iterator->next();
@@ -118,7 +119,7 @@ class Agenda
     public function findByName($name_contact)
     {
         $encontrado = -1;
-        $iterator = $this->contacts->getIterator();
+        $iterator = Agenda::$contacts->getIterator();
         while ($iterator->valid() && $encontrado < 0){
             if(hash_equals($iterator->current()->name,$name_contact)){
                 $encontrado = $iterator->key();
