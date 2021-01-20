@@ -1,12 +1,11 @@
 <?php
 
-class Contact
+abstract class Contact
 {
-    private $dni;
-    private $name;
-    private $phone;
+    protected $name;
+    protected $phone;
 
-    public function __construct()
+    protected function __construct()
     {
         $params = func_get_args();
         $num_params = func_num_args();
@@ -16,33 +15,24 @@ class Contact
         }
     }
 
-    public function __construct0()
+    protected function __construct0()
     {
-        $this->dni = null;
         $this->name = null;
         $this->phone = null;
     }
 
-    public function __construct1($dni)
+    protected function __construct1($dni)
     {
-        $this->dni = $dni;
         $this->name = null;
         $this->phone = null;
     }
 
-    public function __construct2($dni, $name)
+    protected function __construct2($dni, $name)
     {
-        $this->dni = $dni;
         $this->name = $name;
         $this->phone = null;
     }
 
-    public function __construct3($dni, $name, $phone)
-    {
-        $this->dni = $dni;
-        $this->name = $name;
-        $this->phone = $phone;
-    }
 
     public function __get($name)
     {
@@ -65,12 +55,5 @@ class Contact
      * @param $contact Contact
      * @return bool
      */
-    public function equals($contact)
-    {
-        if ($contact instanceof Contact) {
-            return hash_equals($this->dni, $contact->dni);
-        } else {
-            return false;
-        }
-    }
+    public abstract function equals($contact);
 }
