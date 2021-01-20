@@ -8,9 +8,22 @@ class Agenda
      */
     public function __construct()
     {
+        $params = func_get_args();
+        $num_params = func_num_args();
+        $function_constructor = '__construct' . $num_params;
+        if (method_exists($this, $function_constructor)) {
+            call_user_func_array(array($this, $function_constructor), $params);
+        }
+
+    }
+    public function __construct0(){
         $this->contacts = new ArrayObject();
     }
 
+    public function __construct1($data)
+    {
+        $this->contacts = new ArrayObject($data);
+    }
     /**
      * Agrega contacto a la agenda.
      * @param $contact Contact instancia de clase Contact
@@ -20,12 +33,10 @@ class Agenda
     public function add($contact)
     {
         if($contact instanceof Contact) {
-            $result = null;
+            $result = false;
             if (!$this->contains($contact)) {
                 $this->contacts->append($contact);
                 $result = true;
-            } else {
-                $result = false;
             }
         }else{
             throw new Exception("este metodo solo opera con un objeto de la clase Contact");
