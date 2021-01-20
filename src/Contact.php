@@ -59,6 +59,12 @@ class Contact
         return "$this->dni $this->name $this->phone";
     }
 
+    /**
+     * Determina si un contacto es identico a otro. Siendo identico cualquier contacto que tenga un dni
+     * exactamente igual a otro.
+     * @param $contact Contact
+     * @return bool
+     */
     public function equals($contact)
     {
         if ($contact instanceof Contact) {
