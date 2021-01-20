@@ -3,12 +3,12 @@
 
 class Person extends Contact
 {
-    var $dni;
-    var $birth;
+    private $dni;
+    private $birth;
 
     public function __construct()
     {
-
+        parent::__construct();
         $params = func_get_args();
         $num_params = func_num_args();
         $function_constructor = '__construct' . $num_params;
@@ -17,29 +17,40 @@ class Person extends Contact
         }
     }
 
-    public function __construct0()
-    {
-        parent::__construct();
-    }
-
     public function __construct4($dni, $name, $phone, $birth)
     {
-        parent::__construct($name, $phone);
         $this->dni = $dni;
         $this->birth = $birth;
+        $this->name = $name;
+        $this->phone = $phone;
     }
+
+    public function __toString()
+    {
+        return "$this->dni ".parent::__toString()." $this->birth";
+    }
+
     /**
      * @inheritDoc
      */
 
     public function equals($contact)
     {
-        // TODO: Implement equals() method.
+        if($contact instanceof Contact){
+
+        }else{
+            return false;
+        }
     }
 
     public function __get($name)
     {
         return $this->$name;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
     }
 
 }

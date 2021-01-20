@@ -13,7 +13,7 @@ class Agenda
 
     /**
      * Agrega contacto a la agenda.
-     * @param $contact - instancia de clase Contact
+     * @param $contact Contact instancia de clase Contact
      * @return bool - true si consigue agregar false en caso de duplicados
      * @throws Exception - en caso de que el parametro contact no sea instancia de clase Contact
      */
@@ -59,15 +59,15 @@ class Agenda
     public function remove($name_str)
     {
         $iterator = $this->contacts->getIterator();
-        $result = false;
-        while ($iterator->valid() && !$result){
+        $removed = false;
+        while ($iterator->valid() && !$removed){
             if(hash_equals($iterator->current()->name, $name_str)){
                 $iterator->offsetUnset($iterator->key());
-                $result = true;
+                $removed = true;
             }
             $iterator->next();
         }
-        return $result;
+        return $removed;
     }
 
     /**
@@ -75,12 +75,12 @@ class Agenda
      */
     public function findAll()
     {
-        $result = "<table border='1'><tr><td>DNI</td><td>Nombre</td><td>Teléfono</td></tr>";
+        $table = "<table border='1'><tr><td>DNI</td><td>Nombre</td><td>Teléfono</td></tr>";
         foreach ($this->contacts as $contact){
-            $result .= "<tr><td>$contact->dni</td><td>$contact->name</td><td>$contact->phone</td></tr>";
+            $table .= "<tr><td>$contact->dni</td><td>$contact->name</td><td>$contact->phone</td></tr>";
         }
-        $result .= "</table>";
-        echo $result;
+        $table .= "</table>";
+        echo $table;
     }
 
     /**
@@ -90,31 +90,31 @@ class Agenda
      */
     public function existContact($name_str)
     {
-        $result = false;
+        $exist = false;
         $iterator = $this->contacts->getIterator();
-        while($iterator->valid() && !$result){
-            $result = hash_equals($iterator->current()->name, $name_str);
+        while($iterator->valid() && !$exist){
+            $exist = hash_equals($iterator->current()->name, $name_str);
             $iterator->next();
         }
-        return $result;
+        return $exist;
     }
 
     /**
      * Busca un contacto.
-     * @param $name_str string nombre del contacto
+     * @param $name_contact string nombre del contacto
      * @return int posicion del contacto en caso de no existir, devuleve número negativo.
      */
-    public function findByName($name_str)
+    public function findByName($name_contact)
     {
-        $result = -1;
+        $encontrado = -1;
         $iterator = $this->contacts->getIterator();
-        while ($iterator->valid() && $result < 0){
-            if(hash_equals($iterator->current()->name,$name_str)){
-                $result = $iterator->key();
+        while ($iterator->valid() && $encontrado < 0){
+            if(hash_equals($iterator->current()->name,$name_contact)){
+                $encontrado = $iterator->key();
             }
             $iterator->next();
         }
-        return $result;
+        return $encontrado;
     }
 
     public function __get($name){
