@@ -2,6 +2,7 @@
 require "src/Contact.php";
 require "src/Agenda.php";
 require "src/Person.php";
+require "src/Connection.php";
 $contact = new Person();
 $contact->dni = "78716585M";
 $contact->name = "totaso";
@@ -23,3 +24,4 @@ echo $agenda->findByName("totaso");
 echo $agenda->findByName("AA");
 echo $agenda->existContact("hola");
 $agenda->findAll();
+$connection = Connection::getInstance();
